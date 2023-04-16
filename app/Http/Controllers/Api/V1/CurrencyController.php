@@ -18,6 +18,7 @@ class CurrencyController extends Controller
     /**
      * @param  Request  $request
      * @return JsonResponse
+     * @api GET /api/v1/currencies
      */
     public function getCurrencies(Request $request): JsonResponse
     {

@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Currency;
 use App\Models\ExchangeRate;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ExchangeRateRepository
 {
@@ -24,9 +24,9 @@ class ExchangeRateRepository
      * @param  int  $currencyId
      * @param  string|null  $dateFrom
      * @param  string|null  $dateTo
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getByCurrencyId(int $currencyId, ?string $dateFrom = null, ?string $dateTo = null): Collection
+    public function getByCurrencyId(int $currencyId, ?string $dateFrom = null, ?string $dateTo = null): LengthAwarePaginator
     {
         $query = $this->model->newQuery()
             ->join(
@@ -51,7 +51,7 @@ class ExchangeRateRepository
             $query->where("$this->exchangeRateName.created_at", '<=', $dateTo);
         }
 
-        return $query->get();
+        return $query->paginate(100);
     }
 
     /**
@@ -59,14 +59,14 @@ class ExchangeRateRepository
      * @param  int  $specificCurrencyId
      * @param  string|null  $dateFrom
      * @param  string|null  $dateTo
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function getByCurrencyIdAndSpecificCurrencyId(
         int $currencyId,
         int $specificCurrencyId,
         ?string $dateFrom = null,
         ?string $dateTo = null
-    ): Collection {
+    ): LengthAwarePaginator {
         $query = $this->model->newQuery()
             ->where('from_currency_id', $currencyId)
             ->where('to_currency_id', $specificCurrencyId)
@@ -83,6 +83,6 @@ class ExchangeRateRepository
             $query->where("$this->exchangeRateName.created_at", '<=', $dateTo);
         }
 
-        return $query->get();
+        return $query->paginate(100);
     }
 }

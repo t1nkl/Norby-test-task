@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ExchangeRateRepository;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 
 class ExchangeRateService
@@ -23,9 +23,9 @@ class ExchangeRateService
     /**
      * @param  int  $currencyId
      * @param  array  $validated
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getByCurrencyId(int $currencyId, array $validated): Collection
+    public function getByCurrencyId(int $currencyId, array $validated): LengthAwarePaginator
     {
         return $this->getRepository()->getByCurrencyId(
             $currencyId,
@@ -38,9 +38,9 @@ class ExchangeRateService
      * @param  int  $currencyId
      * @param  int  $specificCurrencyId
      * @param  array  $validated
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getByCurrencyIdAndSpecificCurrencyId(int $currencyId, int $specificCurrencyId, array $validated): Collection
+    public function getByCurrencyIdAndSpecificCurrencyId(int $currencyId, int $specificCurrencyId, array $validated): LengthAwarePaginator
     {
         return $this->getRepository()->getByCurrencyIdAndSpecificCurrencyId(
             $currencyId,

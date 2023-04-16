@@ -18,7 +18,7 @@ services:
       - project_test_network
 
   fpm:
-    image: t1nkl/php-alpine:fpm-8.2-arm64v8
+    image: t1nkl/php-alpine:fpm-8.2-arm64v8-swoole
     container_name: project_test_fpm
     working_dir: /code
     restart: always

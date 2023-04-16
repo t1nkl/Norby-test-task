@@ -24,6 +24,7 @@ class ExchangeRateController extends Controller
     /**
      * @param  GetByCurrencyCodeRequest  $request
      * @return JsonResponse
+     * @api GET /api/v1/currencies/{currency_code}/exchange-rate
      */
     public function getByCurrencyCode(GetByCurrencyCodeRequest $request): JsonResponse
     {
@@ -50,6 +51,7 @@ class ExchangeRateController extends Controller
     /**
      * @param  GetByCurrencyCodeForSpecificCurrencyRequest  $request
      * @return JsonResponse
+     * @api GET /api/v1/currencies/{currency_code}/exchange-rate/{specific_currency_code}
      */
     public function getByCurrencyCodeForSpecificCurrency(GetByCurrencyCodeForSpecificCurrencyRequest $request): JsonResponse
     {
