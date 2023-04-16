@@ -24,7 +24,12 @@ return new class extends Migration {
                 ->onDelete('cascade');
             $table->decimal('rate', 10, 4);
             $table->timestamps();
+
+            $table->index(['from_currency_id', 'to_currency_id']);
+            $table->index(['from_currency_id', 'to_currency_id', 'created_at']);
         });
+
+
     }
 
     /**

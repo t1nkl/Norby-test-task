@@ -11,7 +11,7 @@ class CurrencyControllerTest extends TestCase
 {
     /**
      * @test
-     * @covers \App\Http\Controllers\Api\CurrencyController::getCurrencies
+     * @covers \App\Http\Controllers\Api\V1\CurrencyController::getCurrencies
      */
     public function it_can_get_all_currencies(): void
     {

@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\CurrencyController;
-use App\Http\Controllers\Api\ExchangeRateController;
+use App\Http\Controllers\Api\V1\CurrencyController;
+use App\Http\Controllers\Api\V1\ExchangeRateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,8 +30,11 @@ Route::group(
                 'as' => 'currencyCode.',
             ],
             static function () {
-                Route::get('/exchange-rate', [ExchangeRateController::class, 'getExchangeRateByCurrencyCode'])
-                    ->name('getExchangeRateByCurrencyCode');
+                Route::get('/exchange-rate', [ExchangeRateController::class, 'getByCurrencyCode'])
+                    ->name('getByCurrencyCode');
+
+                Route::get('/exchange-rate/{specific_currency_code}', [ExchangeRateController::class, 'getByCurrencyCodeForSpecificCurrency'])
+                    ->name('getByCurrencyCodeForSpecificCurrency');
             }
         );
     }

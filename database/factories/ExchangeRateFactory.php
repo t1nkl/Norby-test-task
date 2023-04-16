@@ -22,6 +22,8 @@ class ExchangeRateFactory extends Factory
             'from_currency_id' => Currency::factory(),
             'to_currency_id' => Currency::factory(),
             'rate' => $this->faker->randomFloat(2, 0, 100),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

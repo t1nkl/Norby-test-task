@@ -20,6 +20,8 @@ class CurrencyFactory extends Factory
         return [
             'name' => $this->faker->name,
             'code' => $this->faker->unique()->currencyCode,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

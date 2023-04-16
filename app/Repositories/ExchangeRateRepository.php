@@ -22,22 +22,67 @@ class ExchangeRateRepository
 
     /**
      * @param  int  $currencyId
+     * @param  string|null  $dateFrom
+     * @param  string|null  $dateTo
      * @return Collection
      */
-    public function getExchangeRatesByCurrencyId(int $currencyId): Collection
+    public function getByCurrencyId(int $currencyId, ?string $dateFrom = null, ?string $dateTo = null): Collection
     {
-        return $this->model->newQuery()->join(
-            $this->currencyTableName,
-            "$this->currencyTableName.id",
-            '=',
-            "$this->exchangeRateName.to_currency_id"
-        )
-            ->where("$this->exchangeRateName.from_currency_id", $currencyId)
+        $query = $this->model->newQuery()
+            ->join(
+                $this->currencyTableName,
+                "$this->currencyTableName.id",
+                '=',
+                "$this->exchangeRateName.to_currency_id"
+            )
+            ->where('from_currency_id', $currencyId)
             ->select(
-                "$this->exchangeRateName.rate",
                 "$this->currencyTableName.code",
                 "$this->currencyTableName.name",
-            )
-            ->get();
+                "$this->exchangeRateName.rate",
+                "$this->exchangeRateName.created_at"
+            );
+
+        if ($dateFrom) {
+            $query->where("$this->exchangeRateName.created_at", '>=', $dateFrom);
+        }
+
+        if ($dateTo) {
+            $query->where("$this->exchangeRateName.created_at", '<=', $dateTo);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * @param  int  $currencyId
+     * @param  int  $specificCurrencyId
+     * @param  string|null  $dateFrom
+     * @param  string|null  $dateTo
+     * @return Collection
+     */
+    public function getByCurrencyIdAndSpecificCurrencyId(
+        int $currencyId,
+        int $specificCurrencyId,
+        ?string $dateFrom = null,
+        ?string $dateTo = null
+    ): Collection {
+        $query = $this->model->newQuery()
+            ->where('from_currency_id', $currencyId)
+            ->where('to_currency_id', $specificCurrencyId)
+            ->select(
+                "$this->exchangeRateName.rate",
+                "$this->exchangeRateName.created_at"
+            );
+
+        if ($dateFrom) {
+            $query->where("$this->exchangeRateName.created_at", '>=', $dateFrom);
+        }
+
+        if ($dateTo) {
+            $query->where("$this->exchangeRateName.created_at", '<=', $dateTo);
+        }
+
+        return $query->get();
     }
 }
